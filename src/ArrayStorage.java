@@ -33,6 +33,7 @@ public class ArrayStorage {
             if (storage[i].getUuid().equals(uuid)) {
                 storage[i] = storage[size - 1];
                 storage[size - 1] = null;
+                break;
             }
         }
         size--;
