@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final int STORAGE_LIMIT = 10000;
+    private static final int STORAGE_LIMIT = 10000;
     private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
@@ -71,7 +71,7 @@ public class ArrayStorage {
 
     private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
