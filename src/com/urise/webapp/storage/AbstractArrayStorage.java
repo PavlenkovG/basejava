@@ -1,6 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -24,14 +25,13 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = findIndex(r.getUuid());
         if (size >= STORAGE_LIMIT) {
             System.out.println("Storage is overflow");
-        } else if (index > 0){
+        } else if (index > 0) {
             System.out.printf("Resume %s already exists", storage[index]);
         } else {
-            insert(r);
+            saveResume(r);
+            size++;
         }
     }
-
-    protected abstract void insert(Resume r);
 
     public void update(Resume r) {
         int index = findIndex(r.getUuid());
@@ -54,17 +54,20 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void delete(String uuid) {
         int index = findIndex(uuid);
         if (index != -1) {
-            erase(index);
+            deleteResume(index);
+            size--;
         } else {
             System.out.println("Resume not found");
         }
     }
 
-    protected abstract void erase(int index);
-
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
+
+    protected abstract void saveResume(Resume r);
+
+    protected abstract void deleteResume(int index);
 
     protected abstract int findIndex(String uuid);
 }
