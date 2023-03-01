@@ -56,10 +56,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void SaveOverflow() {
-        int storageLength = 10000;
+        int storageLimit = 10000;
         storage.clear();
         try {
-            for (int i = 0; i < storageLength; i++) {
+            for (int i = 0; i < storageLimit; i++) {
                 storage.save(new Resume());
             }
         } catch (Exception e) {
