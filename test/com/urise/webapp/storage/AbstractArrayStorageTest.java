@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -55,6 +56,11 @@ public abstract class AbstractArrayStorageTest {
         assertGet(RESUME_4);
         int expected = 4;
         assertSize(expected);
+    }
+
+    @Test(expected = ExistStorageException.class)
+    public void saveExist() {
+        storage.save(RESUME_1);
     }
 
     @Test(expected = StorageException.class)
