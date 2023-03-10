@@ -58,7 +58,7 @@ public class ListStorage extends AbstractStorage {
         return storage.toArray(new Resume[size()]);
     }
 
-    private Resume getKey (String uuid) {
+    private Resume getKey(String uuid) {
         for (Resume r : storage) {
             if (r.getUuid().equals(uuid)) {
                 return r;
