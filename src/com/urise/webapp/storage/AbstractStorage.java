@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-public class AbstractStorage implements Storage {
+public abstract class AbstractStorage implements Storage {
 
     public int size() {
         return 0;
