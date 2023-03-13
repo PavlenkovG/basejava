@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -27,46 +25,32 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public final void save(Resume r) {
-        int index = findIndex(r.getUuid());
+    public final void doSave(Resume r, Object searchKey) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
-        } else if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            saveResume(r);
-            size++;
         }
+        saveResume(r, (int) searchKey);
+        size++;
     }
 
     @Override
-    public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage[index] = r;
-        }
+    public void doUpdate(Resume r, Object searchKey) {
+        storage[(int) searchKey] = r;
     }
 
     @Override
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
+    public Resume doGet(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     @Override
-    public final void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index != -1) {
-            deleteResume(index);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public final void doDelete(Object searchKey) {
+        deleteResume((int) searchKey);
+        size--;
+    }
+
+    public boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 
     @Override
@@ -74,9 +58,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    protected abstract void saveResume(Resume r);
+    protected abstract void saveResume(Resume r, int index);
 
     protected abstract void deleteResume(int index);
 
-    protected abstract int findIndex(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 }
