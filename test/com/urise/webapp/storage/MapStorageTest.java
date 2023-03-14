@@ -2,9 +2,9 @@ package com.urise.webapp.storage;
 
 import org.junit.Test;
 
-public class ListStorageTest extends AbstractArrayStorageTest {
-    public ListStorageTest() {
-        super(new ListStorage());
+public class MapStorageTest extends AbstractArrayStorageTest {
+    public MapStorageTest() {
+        super(new MapStorage());
     }
 
     @Override
