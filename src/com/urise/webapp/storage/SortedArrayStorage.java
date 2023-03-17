@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
+
     @Override
     protected void saveResume(Resume r, int index) {
         int insertPoint = -index - 1;
@@ -19,7 +20,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[index] = null;
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
     }
-
 
     @Override
     protected Integer getSearchKey(String uuid) {

@@ -59,7 +59,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected List<Resume> prepStorage() {
         List<Resume> list = new ArrayList<>();
         for (Resume r : storage) {
-            if(r == null) {
+            if (r == null) {
                 break;
             }
             list.add(r);
