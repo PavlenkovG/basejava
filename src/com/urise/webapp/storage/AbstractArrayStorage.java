@@ -56,7 +56,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> prepStorage() {
+    protected List<Resume> doCopyAll() {
         List<Resume> list = new ArrayList<>();
         for (Resume r : storage) {
             if (r == null) {
