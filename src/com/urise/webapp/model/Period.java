@@ -14,6 +14,22 @@ public class Period {
         this.description = description;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
