@@ -7,6 +7,7 @@ public class CompanySection extends AbstractSection {
     private final List<Company> company;
 
     public CompanySection(List<Company> company) {
+        Objects.requireNonNull(company, "company must not be null");
         this.company = company;
     }
 

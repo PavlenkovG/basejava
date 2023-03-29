@@ -1,7 +1,10 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DateUtil;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,18 +77,20 @@ public class ResumeTestData {
         resume.addSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         List<Period> periods = new ArrayList<>();
-        periods.add(new Period("Автор проекта.", "10/2013", "now",
+        periods.add(new Period("Автор проекта.", DateUtil.of(2013, Month.OCTOBER), LocalDate.now(),
                 "Создание, организация и проведение Java онлайн проектов и стажировок."));
         List<Company> companiesOfWork = new ArrayList<>();
         companiesOfWork.add(new Company("Java Online Projects", "http://javaops.ru/", periods));
         periods = new ArrayList<>();
-        periods.add(new Period("Старший разработчик (backend)", "10/2014", "01/2016",
+        periods.add(new Period("Старший разработчик (backend)", DateUtil.of(2014, Month.OCTOBER),
+                DateUtil.of(2016, Month.JANUARY),
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API," +
                         " Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация," +
                         " авторизация по OAuth1, OAuth2, JWT SSO."));
         companiesOfWork.add(new Company("Wrike", "https://www.wrike.com/", periods));
         periods = new ArrayList<>();
-        periods.add(new Period("Java архитектор", "04/2012", "10/2014",
+        periods.add(new Period("Java архитектор", DateUtil.of(2012, Month.APRIL),
+                DateUtil.of(2014, Month.OCTOBER),
                 "Организация процесса разработки системы ERP для разных окружений: релизная политика," +
                         " версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway)," +
                         " конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и" +
@@ -99,18 +104,27 @@ public class ResumeTestData {
         periods = new ArrayList<>();
         resume.addSection(SectionType.EXPERIENCE, new CompanySection(companiesOfWork));
         periods.add(new Period("'Functional Programming Principles in Scala' by Martin Odersky",
-                "03/2013", "05/2013", ""));
+                DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY), ""));
         List<Company> companiesOfStudy = new ArrayList<>();
         companiesOfStudy.add(new Company("Coursera", "https://www.coursera.org/course/progfun", periods));
         periods = new ArrayList<>();
         periods.add(new Period("'Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'",
-                "03/2011", "04/2011", ""));
+                DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL), ""));
         companiesOfStudy.add(new Company("Luxoft",
                 "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366", periods));
         periods = new ArrayList<>();
-        periods.add(new Period("3 месяца обучения мобильным IN сетям (Берлин)", "01/2005",
-                "04/2005", ""));
+        periods.add(new Period("3 месяца обучения мобильным IN сетям (Берлин)",
+                DateUtil.of(2005, Month.JANUARY), DateUtil.of(2004, Month.MAY), ""));
         companiesOfStudy.add(new Company("Siemens AG", "http://www.siemens.ru/", periods));
+        periods = new ArrayList<>();
+        periods.add(new Period("Инженер", DateUtil.of(1997, Month.SEPTEMBER),
+                DateUtil.of(1999, Month.FEBRUARY), "Тестирование, отладка, " +
+                "внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."));
+        periods.add(new Period("Инженер по аппаратному и программному тестированию",
+                DateUtil.of(1999, Month.MARCH),
+                DateUtil.of(2005, Month.JANUARY), "Тестирование, отладка, " +
+                "внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."));
+        companiesOfStudy.add(new Company("Alcatel", "http://www.alcatel.ru/", periods));
         resume.addSection(SectionType.EDUCATION, new CompanySection(companiesOfStudy));
 
         for (ContactType type : ContactType.values()) {
