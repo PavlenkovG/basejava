@@ -3,10 +3,11 @@ package com.urise.webapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainFile {
-    public static void main(String[] args) {
-        String filePath = ".\\.gitignore";
+    public static void main(String[] args) throws IOException {
+        String filePath = "./.gitignore";
 
         File file = new File(filePath);
         try {
@@ -28,6 +29,20 @@ public class MainFile {
             System.out.println(fis.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        printDirAndFile("./");
+    }
+
+    private static void printDirAndFile(String path) throws IOException {
+        File dir = new File(path);
+        for (File file : Objects.requireNonNull(dir.listFiles())) {
+            if(file.isDirectory()) {
+                System.out.println("Package: " + file.getPath());
+                printDirAndFile(file.getCanonicalPath());
+            } else {
+                System.out.println("File: " + file.getName());
+            }
         }
     }
 }

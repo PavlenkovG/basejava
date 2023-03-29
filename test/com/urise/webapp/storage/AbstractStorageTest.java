@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.urise.webapp.ResumeTestData.createResume;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -31,10 +32,10 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-        RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-        RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-        RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+        RESUME_1 = createResume(UUID_1, FULL_NAME_1);
+        RESUME_2 = createResume(UUID_2, FULL_NAME_2);
+        RESUME_3 = createResume(UUID_3, FULL_NAME_3);
+        RESUME_4 = createResume(UUID_4, FULL_NAME_4);
     }
 
     private final List<Resume> EMPTY_ARRAY = new ArrayList<>();
@@ -80,7 +81,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume expected = new Resume("uuid1", FULL_NAME_4);
+        Resume expected = createResume("uuid1", FULL_NAME_4);
         storage.update(expected);
         assertSame(expected, storage.get("uuid1"));
     }

@@ -68,9 +68,9 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract void doDelete(SK searchKey);
 
-    protected abstract boolean isExist(SK searchKey);
-
     protected abstract SK getSearchKey(String uuid);
+
+    protected abstract boolean isExist(SK searchKey);
 
     protected abstract List<Resume> doCopyAll();
 }
