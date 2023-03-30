@@ -41,7 +41,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             doWrite(r, file);
         } catch (IOException e) {
-            throw new StorageException("Write error", r.getUuid(), e);
+            throw new StorageException("IO error", r.getUuid(), e);
         }
 
     }
@@ -62,7 +62,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Clear error", null);
+            throw new StorageException("read error", null);
         }
         for (File file : files) {
             doDelete(file);
@@ -74,7 +74,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public int size() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Size error", null);
+            throw new StorageException("read error", null);
         }
         return files.length;
     }
