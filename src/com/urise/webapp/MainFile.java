@@ -31,17 +31,17 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        printDirAndFile("./");
+        printDirAndFile("./", "");
     }
 
-    private static void printDirAndFile(String path) throws IOException {
+    private static void printDirAndFile(String path, String indent) throws IOException {
         File dir = new File(path);
         for (File file : Objects.requireNonNull(dir.listFiles())) {
-            if(file.isDirectory()) {
-                System.out.println("Package: " + file.getPath());
-                printDirAndFile(file.getCanonicalPath());
+            if (file.isDirectory()) {
+                System.out.println(indent + "Dir: " + file.getPath());
+                printDirAndFile(file.getCanonicalPath(), indent + "  ");
             } else {
-                System.out.println("File: " + file.getName());
+                System.out.println(indent + "File: " + file.getName());
             }
         }
     }

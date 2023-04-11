@@ -1,8 +1,12 @@
 package com.urise.webapp.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class Company {
+public class Company implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String title;
     private final String website;
     private final List<Period> periods;

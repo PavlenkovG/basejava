@@ -1,9 +1,13 @@
 package com.urise.webapp.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class CompanySection extends AbstractSection {
+public class CompanySection extends AbstractSection implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final List<Company> company;
 
     public CompanySection(List<Company> company) {
