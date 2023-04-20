@@ -8,7 +8,10 @@ import java.util.Objects;
 public class ListSection extends AbstractSection implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<String> strings;
+    private List<String> strings;
+
+    public ListSection() {
+    }
 
     public ListSection(List<String> strings) {
         Objects.requireNonNull(strings, "strings must not be null");
@@ -22,16 +25,14 @@ public class ListSection extends AbstractSection implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ListSection that = (ListSection) o;
-        return strings.equals(that.strings);
+        if (!(o instanceof ListSection that)) return false;
+        return Objects.equals(strings, that.strings);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(strings);
     }
-
 
     @Override
     public String toString() {

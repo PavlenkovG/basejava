@@ -70,7 +70,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() {
         storage.save(RESUME_4);
-        assertGet(RESUME_4);
+        assertGet(RESUME_4, "save failed");
         int expected = 4;
         assertSize(expected);
     }
@@ -94,9 +94,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(RESUME_1);
-        assertGet(RESUME_2);
-        assertGet(RESUME_3);
+        assertGet(RESUME_1, "get RESUME_1 test. Wrong resume was returned");
+        assertGet(RESUME_2, "get RESUME_2 test. Wrong resume was returned");
+        assertGet(RESUME_3, "get RESUME_3 test. Wrong resume was returned");
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -109,7 +109,7 @@ public abstract class AbstractStorageTest {
         storage.delete(UUID_3);
         int expected = 2;
         assertSize(expected);
-        assertGet(RESUME_3);
+        assertGet(RESUME_3, "delete failed");
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -128,7 +128,7 @@ public abstract class AbstractStorageTest {
         assertEquals(expected, storage.size());
     }
 
-    private void assertGet(Resume r) {
-        assertEquals(r, storage.get(r.getUuid()));
+    private void assertGet(Resume r, String message) {
+        assertEquals(message, r, storage.get(r.getUuid()));
     }
 }

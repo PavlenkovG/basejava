@@ -8,7 +8,10 @@ import java.util.Objects;
 public class CompanySection extends AbstractSection implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final List<Company> company;
+    private  List<Company> company;
+
+    public CompanySection() {
+    }
 
     public CompanySection(List<Company> company) {
         Objects.requireNonNull(company, "company must not be null");
