@@ -4,10 +4,10 @@ package com.urise.webapp.storage.serializer;
 import com.urise.webapp.model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class DataStreamSerializer implements StreamSerializer {
 
@@ -16,15 +16,11 @@ public class DataStreamSerializer implements StreamSerializer {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
-            Map<ContactType, String> contacts = r.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-                dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue());
-            }
-            // TODO implements sections
-            dos.writeInt(r.getSections().size());
-            for (Map.Entry<SectionType, AbstractSection> section : r.getSections().entrySet()) {
+            writeWithException(r.getContacts().entrySet(), dos, (contact -> {
+                dos.writeUTF(contact.getKey().name());
+                dos.writeUTF(contact.getValue());
+            }));
+            writeWithException(r.getSections().entrySet(), dos, (section -> {
                 SectionType type = section.getKey();
                 dos.writeUTF(type.name());
                 switch (type) {
@@ -34,30 +30,25 @@ public class DataStreamSerializer implements StreamSerializer {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         ListSection listSection = (ListSection) section.getValue();
-                        dos.writeInt(listSection.getStrings().size());
-                        for (String string : listSection.getStrings()) {
-                            dos.writeUTF(string);
-                        }
+                        writeWithException(listSection.getStrings(), dos, dos::writeUTF);
                     }
                     case EXPERIENCE, EDUCATION -> {
                         CompanySection companySection = (CompanySection) section.getValue();
-                        dos.writeInt(companySection.getCompany().size());
-                        for (Company company : companySection.getCompany()) {
+                        writeWithException(companySection.getCompany(), dos, (company -> {
                             dos.writeUTF(company.getTitle());
                             String website = company.getWebsite();
                             dos.writeUTF(website == null ? "" : website);
-                            dos.writeInt(company.getPeriods().size());
-                            for (Period period : company.getPeriods()) {
+                            writeWithException(company.getPeriods(), dos, (period -> {
                                 dos.writeUTF(period.getTitle());
                                 dos.writeUTF(period.getStartDate().toString());
                                 dos.writeUTF(period.getEndDate().toString());
                                 String description = period.getDescription();
                                 dos.writeUTF(description == null ? "" : description);
-                            }
-                        }
+                            }));
+                        }));
                     }
                 }
-            }
+            }));
         }
     }
 
@@ -71,7 +62,6 @@ public class DataStreamSerializer implements StreamSerializer {
             for (int i = 0; i < size; i++) {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
-            // TODO implements sections
             int sectionSize = dis.readInt();
             for (int i = 0; i < sectionSize; i++) {
                 SectionType type = SectionType.valueOf(dis.readUTF());
@@ -109,4 +99,17 @@ public class DataStreamSerializer implements StreamSerializer {
             return resume;
         }
     }
+
+    private interface myConsumer<T> {
+        void accept(T t) throws IOException;
+    }
+
+    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, myConsumer<T> consumer) throws
+            IOException {
+        dos.writeInt(collection.size());
+        for (T element : collection) {
+            consumer.accept(element);
+        }
+    }
+
 }
